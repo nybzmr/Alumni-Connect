@@ -6,7 +6,7 @@ import { APIURL } from "../APIURL";
 export const userDataContext = createContext();
 
 const UserData = ({ children }) => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

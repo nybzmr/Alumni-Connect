@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { userDataContext } from "../store/UserData";
 import axios from "axios";
 import Loader from "../components/Feed/Loader";
@@ -13,10 +12,9 @@ const ProfilePage = () => {
   };
 
   const userData = useContext(userDataContext);
-
-  // Add a loading state
   const [loading, setLoading] = useState(true);
   const [myPostsData, setMyPostsData] = useState([]);
+  const [userProfileData, setUserProfileData] = useState(null);
 
   const deletePost = async (id) => {
     try {
@@ -26,7 +24,6 @@ const ProfilePage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // If delete is successful, filter out the deleted post from state
       if (response.status === 200) {
         setMyPostsData((prevPosts) =>
           prevPosts.filter((post) => post._id !== id)
@@ -51,33 +48,26 @@ const ProfilePage = () => {
         );
         setMyPostsData(response.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user posts:", error);
       } finally {
-        setLoading(false); // Stop loading after the request completes
+        setLoading(false);
       }
     };
 
     fetchMyPosts();
   }, []);
 
-  if (!userData) {
+  useEffect(() => {
+   setUserProfileData(userData)
+  }, [userData]);
+
+  if (!userProfileData) {
     return <div>Loading...</div>;
   }
 
-  const {
-    firstName,
-    lastName,
-    email,
-    currentInstitution,
-    previousInstitutions,
-    achievements,
-    experience
-  } = userData;
-
   return (
-    <div className=" py-8 w-[95vw]">
+    <div className="py-8 w-[95vw]">
       <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
-        {/* Left Section - Profile */}
         <div className="col-span-4 sm:col-span-3">
           <div className="bg-white shadow rounded-lg p-6">
             <div className="flex flex-col items-center">
@@ -87,11 +77,11 @@ const ProfilePage = () => {
                 alt="Profile"
               />
               <h1 className="text-2xl font-bold">
-                {capitalize(firstName)} {capitalize(lastName)}
+                {capitalize(userProfileData.firstName)} {capitalize(userProfileData.lastName)}
               </h1>
               <p className="text-gray-700">
-                {currentInstitution.length > 0 ? (
-                  currentInstitution.map((item,index) => <span key={index}>{item}</span>)
+                {userProfileData.currentInstitution.length > 0 ? (
+                  userProfileData.currentInstitution.map((item, index) => <span key={index}>{item}</span>)
                 ) : (
                   <span>NO CURRENT INSTITUTIONS</span>
                 )}
@@ -108,11 +98,11 @@ const ProfilePage = () => {
             <hr className="border-t border-gray-300" />
             <div className="flex flex-col">
               <span className="text-gray-700 uppercase font-bold tracking-wider my-3 text-xl">
-                Previous Istitutions
+                Previous Institutions
               </span>
               <ul>
-                {previousInstitutions.length > 0 ? (
-                  previousInstitutions.map((item,index) => (
+                {userProfileData.previousInstitutions.length > 0 ? (
+                  userProfileData.previousInstitutions.map((item, index) => (
                     <li key={index} className="mb-2">{item}</li>
                   ))
                 ) : (
@@ -126,8 +116,8 @@ const ProfilePage = () => {
                 Achievements
               </span>
               <ul>
-                {achievements.length > 0 ? (
-                  achievements.map((item,index) => <li key={index} className="mb-2">{item}</li>)
+                {userProfileData.achievements.length > 0 ? (
+                  userProfileData.achievements.map((item, index) => <li key={index} className="mb-2">{item}</li>)
                 ) : (
                   <p className="text-gray-500 font-semibold mb-3">
                     None as of now
@@ -151,9 +141,6 @@ const ProfilePage = () => {
               rhoncus id.
             </p>
 
-            {/* <h3 className="font-semibold text-center mt-3 -mb-2">
-                Find me on
-              </h3> */}
             <div className="flex justify-center items-center gap-6 my-6">
               {/* Social Links */}
               <a
@@ -201,7 +188,7 @@ const ProfilePage = () => {
             <h2 className="text-xl font-bold mt-6 mb-4">Experience</h2>
             <div className="mb-6">
               <div className="flex justify-between flex-wrap gap-2 w-full">
-                <span className="text-gray-700 font-bold">{experience.map((item, index)=><p key={index}>{item}</p>)}</span>
+                <span className="text-gray-700 font-bold">{userProfileData.experience.map((item, index) => <p key={index}>{item}</p>)}</span>
                 <p>
                   <span className="text-gray-700 mr-2">at ABC Company</span>
                   <span className="text-gray-700">2017 - 2019</span>
@@ -209,7 +196,7 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="overflow-y-auto  lg:max-h-[40vh] h-auto lg:p-4 lg:px-6 lg:my-4 shadow rounded-lg hidden lg:block">
+          <div className="overflow-y-auto lg:max-h-[40vh] h-auto lg:p-4 lg:px-6 lg:my-4 shadow rounded-lg hidden lg:block">
             <h2 className="text-xl font-bold mt-6 mb-4">My Posts</h2>
             {loading ? (
               <Loader />

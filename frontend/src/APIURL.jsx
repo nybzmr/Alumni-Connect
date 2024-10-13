@@ -1,2 +1,2 @@
 
-export const APIURL = 'https://alumni-connect-backend-nine.vercel.app'
+export const APIURL = 'https://alumni-connect-backend-one.vercel.app'

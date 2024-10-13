@@ -26,7 +26,7 @@ const ProfileCard = () => {
     //   </p>
 
     //   <div className="flex justify-end mt-4">
-    //     <Link to={'/my-profile'} className="text-lg font-medium text-blue-600" tabIndex="0" role="link">
+    //     <Link to={'/app/app/my-profile'} className="text-lg font-medium text-blue-600" tabIndex="0" role="link">
     //        {`${firstName} ${lastName}`}
     //     </Link>
     //   </div>
@@ -38,7 +38,7 @@ const ProfileCard = () => {
                 className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
                 alt="Profile"
               />
-              <Link to={'/my-profile'} className="text-2xl font-bold text-blue-500">
+              <Link to={'/app/my-profile'} className="text-2xl font-bold text-blue-500">
                 {capitalize(firstName)} {capitalize(lastName)}
               </Link>
               <p className="text-gray-700">

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <aside className="flex flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-white border-r rtl:border-l rtl:border-r-0 ">
+    <aside className="flex flex-col items-center w-14 h-screen py-8 overflow-y-auto bg-white border-r rtl:border-l rtl:border-r-0 ">
       <nav className="flex flex-col flex-1 space-y-6">
         <Link
-          to={"/"}
+          to={"/app/home"}
           className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg  hover:bg-gray-100"
         >
           <svg
@@ -26,7 +26,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          to={"/create-post"}
+          to={"/app/create-post"}
           className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg  hover:bg-gray-100"
         >
           <svg
@@ -45,7 +45,7 @@ const Sidebar = () => {
 
       <div className="flex flex-col space-y-6">
         <Link
-          to={'/my-profile'}
+          to={'/app/my-profile'}
           className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg  hover:bg-gray-100"
         >
           <svg

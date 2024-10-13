@@ -5,6 +5,7 @@ import axios from "axios";
 import Loader from "../components/Feed/Loader";
 import Card from "../components/Feed/Card";
 import { Link } from "react-router-dom";
+import { APIURL } from "../APIURL";
 
 const ProfilePage = () => {
   const capitalize = (str) => {
@@ -20,7 +21,7 @@ const ProfilePage = () => {
   const deletePost = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`http://localhost:8000/posts/${id}`, {
+      const response = await axios.delete(`${APIURL}/posts/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,7 +42,7 @@ const ProfilePage = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:8000/posts/my-posts",
+          `${APIURL}/posts/my-posts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -97,7 +98,7 @@ const ProfilePage = () => {
               </p>
               <div className="my-6 flex flex-wrap gap-4 justify-center">
                 <Link
-                  to={'/update-profile'}
+                  to={'/app/update-profile'}
                   className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
                 >
                   Update About
@@ -208,7 +209,7 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="overflow-y-auto  max-h-[40vh] h-auto p-4 px-6 my-4 shadow rounded-lg">
+          <div className="overflow-y-auto  lg:max-h-[40vh] h-auto lg:p-4 lg:px-6 lg:my-4 shadow rounded-lg hidden lg:block">
             <h2 className="text-xl font-bold mt-6 mb-4">My Posts</h2>
             {loading ? (
               <Loader />

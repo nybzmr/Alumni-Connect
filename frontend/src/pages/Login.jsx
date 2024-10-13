@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { APIURL } from "../APIURL";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,14 +14,14 @@ const Login = () => {
       if(token){
         localStorage.removeItem('token')
       }
-      const response = await axios.post("http://localhost:8000/auth/login", {
+      const response = await axios.post(`${APIURL}/auth/login`, {
         email,
         password,
       });
       // Store the JWT token in localStorage
       localStorage.setItem("token", response.data.token);
       alert("Logged in successfully");
-      navigate('/')
+      navigate('/app/home')
       
     } catch (error) {
       console.error(error);

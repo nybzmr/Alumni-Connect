@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { userDataContext } from "../store/UserData";
 import { useNavigate } from "react-router-dom";
+import { APIURL } from "../APIURL";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const UpdateProfile = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.patch(
-        "http://localhost:8000/user/me",
+        `${APIURL}/user/me`,
         updatedData,
         {
           headers: {
@@ -91,7 +92,7 @@ const UpdateProfile = () => {
         }
       );
       alert("Profile updated successfully:");
-      navigate("/my-profile");
+      navigate("/app/my-profile");
     } catch (error) {
       console.error(
         "Error updating profile:",

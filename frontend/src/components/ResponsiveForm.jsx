@@ -3,6 +3,7 @@ import axios from "axios";
 import { PostDataContext } from "../store/PostData";
 import { userDataContext } from "../store/UserData";
 import { useNavigate } from "react-router-dom";
+import { APIURL } from "../APIURL";
 
 const ResponsiveForm = () => {
   const { data, setData } = useContext(PostDataContext);
@@ -32,7 +33,7 @@ const ResponsiveForm = () => {
 
       // Send post request to backend
       const response = await axios.post(
-        "http://localhost:8000/posts/create",
+        `${APIURL}posts/create`,
         {
           title: formData.title,
           body: formData.body,
@@ -49,7 +50,7 @@ const ResponsiveForm = () => {
 
       // Show success message
       alert("Post created successfully!");
-      navigate('/')
+      navigate('/app/home')
 
 
       // Optionally update local context state if you want to show the new post in the frontend immediately

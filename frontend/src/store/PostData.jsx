@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { APIURL } from "../APIURL";
 
 
 export const PostDataContext = createContext();
@@ -10,7 +11,7 @@ export const PostDataProvider = ({ children }) => {
   const [dataLength, setDataLength] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:8000/posts/feed")
+    fetch(`${APIURL}/posts/feed`)
       .then((res) => res.json())
       .then((res) => {
         setFetched(true);

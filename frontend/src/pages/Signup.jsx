@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { APIURL } from '../APIURL';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Signup = () => {
       if(token){
         localStorage.removeItem('token')
       }
-      const response = await axios.post('http://localhost:8000/auth/signup', {
+      const response = await axios.post(`${APIURL}/auth/signup`, {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
@@ -47,7 +48,7 @@ const Signup = () => {
       });
       localStorage.setItem('token', response.data.token);
       alert('Signup successful');
-      navigate('/')
+      navigate('/app/home')
       
     } catch (error) {
       console.error('Error during signup:', error);
@@ -141,7 +142,7 @@ const Signup = () => {
 
       <div className="flex items-center justify-center py-4 text-center bg-gray-50 ">
         <span className="text-sm text-gray-600 ">Already have an account? </span>
-        <Link to={'/login'} className="mx-2 text-sm font-bold text-blue-500 hover:underline">
+        <Link to={'/'} className="mx-2 text-sm font-bold text-blue-500 hover:underline">
           Login
         </Link>
       </div>

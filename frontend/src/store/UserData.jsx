@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../components/Feed/Loader";
+import { APIURL } from "../APIURL";
 
 export const userDataContext = createContext();
 
@@ -15,7 +16,7 @@ const UserData = ({ children }) => {
         const token = localStorage.getItem('token');
 
         // Replace with the actual user ID or endpoint to get user info
-        const response = await axios.get("http://localhost:8000/user/me", {
+        const response = await axios.get(`${APIURL}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

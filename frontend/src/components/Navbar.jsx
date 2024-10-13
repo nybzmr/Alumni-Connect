@@ -7,7 +7,7 @@ const Navbar = () => {
         const token = localStorage.getItem("token");
   const handleSignOut = ()=>{
     localStorage.removeItem("token");
-    navigate('/login')
+    navigate('/')
 
   }
   return (
@@ -41,7 +41,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white  md:mt-0 md:p-0 md:top-0 md:relative md:opacity-100 md:translate-x-0 md:flex md:items-center md:justify-between ${
+          className={`absolute shadow inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white  md:mt-0 md:p-0 md:top-0 md:relative md:opacity-100 md:translate-x-0 md:flex md:items-center md:justify-between ${
             isOpen ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'
           }`}
         >
@@ -61,7 +61,9 @@ const Navbar = () => {
             />
             
           </div>
-          {token?<button className='border border-black px-2 py-1 rounded ' onClick={handleSignOut}>Sign Out</button>:<button></button>}
+          {token?<button className='border lg:border-black px-2 py-1 my-2 rounded-lg text-gray-700 font-semibold ' onClick={handleSignOut}>Sign Out</button>:<button className='border lg:border-black px-2 py-1 my-2 rounded-lg text-gray-700 font-semibold ' onClick={()=>{
+            navigate('/')
+          }}>Login</button>}
         </div>
       </div>
     </nav>

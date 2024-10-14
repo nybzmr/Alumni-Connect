@@ -17,10 +17,10 @@ function App() {
     {path:'/app',
       element: <Layout/>,
       children:[
-        {path: '/home' , element: <Home/>},
-        {path: '/create-post' , element: <CreatePost/>},
-        {path: '/my-profile' , element: <ProfilePage/>},
-        {path: '/update-profile' , element: <UpdateProfile/>}
+        {path: '/app/home' , element: <Home/>},
+        {path: '/app/create-post' , element: <CreatePost/>},
+        {path: '/app/my-profile' , element: <ProfilePage/>},
+        {path: '/app/update-profile' , element: <UpdateProfile/>}
       ]
     },
     {path:'/',

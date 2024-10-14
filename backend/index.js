@@ -22,6 +22,9 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('My name is Nayaab');
+});
 app.use('/auth', authRoutes);
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);

@@ -7,13 +7,13 @@ const userRoutes = require('./routes/userRoutes');
 require('dotenv').config();
 
 const app = express();
-const corsOptions = {
-  origin: 'https://alumni-connect-kappa.vercel.app/',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
+// const corsOptions = {
+//   origin: 'https://alumni-connect-kappa.vercel.app/',
+//   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// };
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json());
 
 // Connect to MongoDB

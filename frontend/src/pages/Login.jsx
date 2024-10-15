@@ -4,25 +4,47 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { APIURL } from "../APIURL";
 const Login = () => {
+  function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+  function deleteCookie(name) {
+    document.cookie = name + "=; Max-Age=-99999999;";
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token')
-      if(token){
-        localStorage.removeItem('token')
+      const token = getCookie("token");
+      if (token) {
+        deleteCookie("token");
       }
       const response = await axios.post(`${APIURL}/auth/login`, {
         email,
         password,
       });
-      // Store the JWT token in localStorage
-      localStorage.setItem("token", response.data.token);
+      // Store the JWT token in cookie
+      setCookie("token", response.data.token, 1);
       alert("Logged in successfully");
-      navigate('/app/home')
-      
+      navigate("/app/home");
     } catch (error) {
       console.error(error);
       alert("Login failed");

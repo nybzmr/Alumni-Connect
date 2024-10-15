@@ -8,14 +8,35 @@ export const userDataContext = createContext();
 const UserData = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+  function deleteCookie(name) {
+    document.cookie = name + "=; Max-Age=-99999999;";
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get the token from localStorage or any other way to authenticate
-        const token = localStorage.getItem('token');
-
-        // Replace with the actual user ID or endpoint to get user info
+        // Get the token from cookie or any other way to authenticate
+        const token = getCookie("token");
         const response = await axios.get(`${APIURL}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,7 +55,11 @@ const UserData = ({ children }) => {
   }, []);
 
   if (loading) {
-    return <div><Loader/></div>; // You can replace this with a spinner or skeleton
+    return (
+      <div>
+        <Loader />
+      </div>
+    ); // You can replace this with a spinner or skeleton
   }
 
   return (

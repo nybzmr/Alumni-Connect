@@ -32,11 +32,11 @@ const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = getCookie("token");
+    if (token) {
+      deleteCookie("token");
+    }
     try {
-      const token = getCookie("token");
-      if (token) {
-        deleteCookie("token");
-      }
       const response = await axios.post(`${APIURL}/auth/login`, {
         email,
         password,

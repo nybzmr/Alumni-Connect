@@ -51,12 +51,11 @@ const Signup = () => {
       alert("Passwords do not match");
       return;
     }
-
+    const token = getCookie("token");
+    if (token) {
+      deleteCookie("token");
+    }
     try {
-      const token = getCookie("token");
-      if (token) {
-        deleteCookie("token");
-      }
       const response = await axios.post(`${APIURL}/auth/signup`, {
         firstName: formData.firstName,
         lastName: formData.lastName,
